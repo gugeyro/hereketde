@@ -1,44 +1,35 @@
-import { useEffect, useState } from 'react'
-import WebApp from '@twa-dev/sdk'
+import { useEffect, useState } from "react";
+import "./App.css";
+import { Card, CardContent } from "@/components/ui/Card";
 
 function App() {
-  const [username, setUsername] = useState('')
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    WebApp.ready()
-    const user = WebApp.initDataUnsafe?.user
-    if (user) {
-      setUsername(user.first_name)
+    if (window?.Telegram?.WebApp?.initDataUnsafe?.user) {
+      setUserData(window.Telegram.WebApp.initDataUnsafe.user);
     }
-  }, [])
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-white text-center space-y-6">
-      <h1 className="text-3xl font-bold">Добро пожаловать в HEREKETDE</h1>
-      <p className="text-lg text-gray-700">Привет, {username}! 👟</p>
-
-      <div className="bg-gray-100 p-4 rounded-xl shadow-md w-full max-w-xs space-y-2 text-left">
-        <p>👟 <strong>Кроссовки:</strong> 2</p>
-        <p>⚡ <strong>Энергия:</strong> 2</p>
-        <p>💰 <strong>Токены:</strong> 15</p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="absolute top-4 left-4 flex items-center space-x-2">
+        <div className="relative w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-xl font-bold">
+          {userData?.first_name?.charAt(0) || "?"}
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] bg-white px-1 rounded shadow text-gray-800">
+            {userData?.first_name || "Guest"}
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4 pt-4">
-        <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">
-          🚶 Начать ходьбу
-        </button>
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg">
-          🎁 Открыть сундук
-        </button>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
-          ➕ Взять в аренду
-        </button>
-        <button className="bg-gray-700 hover:bg-gray-800 text-white py-2 px-4 rounded-lg">
-          🛒 Магазин
-        </button>
-      </div>
+      <Card>
+        <CardContent>
+          <h1 className="text-2xl font-bold mb-2">Welcome to Hereketde</h1>
+          <p>Walk, earn tokens, and win prizes!</p>
+        </CardContent>
+      </Card>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
