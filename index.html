@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hereketde</title>
-    <!-- Подключаем Telegram Web Apps API -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hereketde</title>
+
+  <!-- Подключаем Telegram Web App API -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>Welcome to Hereketde!</h1>
-    <p>Your Telegram username: <span id="username"></span></p>
+  <h1>Welcome to Hereketde!</h1>
+  <p>Your Telegram username: <span id="username">Loading...</span></p>
 
-    <script>
-        // Инициализация Telegram Web App
-        const tg = window.Telegram.WebApp;
+  <script>
+    // Инициализация Telegram WebApp API
+    const tg = window.Telegram.WebApp;
 
-        // Получение данных пользователя
-        const username = tg.initDataUnsafe.user?.username || "Guest";
-        document.getElementById("username").textContent = username;
+    // Растягиваем Mini App на весь экран
+    tg.expand();
 
-        // Отображение интерфейса
-        tg.ready();
-    </script>
+    // Безопасно получаем имя пользователя или Guest
+    const username = tg.initDataUnsafe?.user?.username || "Guest";
+    document.getElementById("username").textContent = username;
+
+    // Сообщаем Telegram, что всё готово
+    tg.ready();
+  </script>
 </body>
 </html>
